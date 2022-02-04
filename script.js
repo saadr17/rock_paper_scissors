@@ -1,66 +1,90 @@
 let choices = ["rock", "paper", "scissors"];
 
-const computerPlay = (choices) => {
-  const random = Math.floor(Math.random() * choices.length);
-  let computerChoice = choices[random];
-  return computerChoice;
-};
-
-const playerSelection = () => {};
-
-let playerChoice = "";
-
 let rockButton = document.querySelector("#rockButton");
 let paperButton = document.querySelector("#paperButton");
 let scissorsButton = document.querySelector("#scissorsButton");
+let playRoundBtn = document.querySelector("#playRoundBtn");
+let playerChoice = "";
+let scoreText = document.querySelector("#score");
+let playerText = document.querySelector("#player_choice");
+let computerText = document.querySelector("#computer_choice");
+let announce = document.querySelector("#announce");
+let playerScoreText = document.querySelector("#playerScore");
+let computerScoreText = document.querySelector("#computerScore");
+//computer choice
 
+//player choice
 rockButton.addEventListener("click", () => {
   playerChoice = choices[0];
-  console.log(playerChoice);
-
-  // alert('This is the rock button')
+  playerText.innerHTML = playerChoice;
+  console.log("playerChoice", playerChoice);
 });
 paperButton.addEventListener("click", () => {
   playerChoice = choices[1];
-  console.log(playerChoice);
+  playerText.innerHTML = playerChoice;
+  console.log("playerChoice", playerChoice);
 });
 scissorsButton.addEventListener("click", () => {
   playerChoice = choices[2];
-  console.log(playerChoice);
+  playerText.innerHTML = playerChoice;
+  console.log("playerChoice", playerChoice);
 });
 
-while (playerChoice === "") {
-  let begin = document.querySelector("#beginMessage");
-  begin.innerHTML = "PICK AN OPTION TO BEGIN THE GAME";
-}
+//playGame and game logic
+const playGame = (playerChoice, choices) => {
+  // computerScoreText.innerHTML = playerScore;
+  // playerScoreText.innerHTML = computerScore;
+  // if (playerScore == 5) {
+  //   return (announce.innerHTML = "YOU WIN THE GAME");
+  // }
+  // if (computerScore == 5) {
+  //   return (announce.innerHTML = "COMPUTER WINS GAME");
+  // }
+  let computerChoice = "";
+  const random = Math.floor(Math.random() * choices.length);
+  // computerChoice = choices[random];
+  computerChoice = choices[random];
+  computerText.innerHTML = computerChoice;
 
-const game = (computerChoice, playerChoice) => {
-  let computerScore = 0;
-  let userScore = 0;
-
+  //computer winning scenarios
   if (computerChoice === "rock" && playerChoice === "scissors") {
-    return `computer chose ${computerChoice}, which beats ${playerChoice}, computer wins`;
+    // console.log(computerChoice);
+    computerScore++;
+    return (announce.innerHTML = "Computer Wins");
   } else if (computerChoice === "paper" && playerChoice === "rock") {
-    return `computer chose ${computerChoice}, which beats ${playerChoice}, computer wins`;
+    // console.log(computerChoice);
+    computerScore++;
+    return (announce.innerHTML = "Computer Wins");
   } else if (computerChoice === "scissors" && playerChoice === "paper") {
-    return `computer chose ${computerChoice}, which beats ${playerChoice}, computer wins`;
+    // console.log(computerChoice);
+    computerScore++;
+    return (announce.innerHTML = "Computer Wins");
   }
   // player wiining scenarios
   else if (computerChoice === "rock" && playerChoice === "paper") {
-    return `player chose ${playerChoice}, which beats ${computerChoice}, player wins`;
+    playerScore++;
+    return (announce.innerHTML = "You Win");
   } else if (computerChoice === "paper" && playerChoice === "scissors") {
-    return `player chose ${playerChoice}, which beats ${computerChoice}, player wins`;
+    playerScore++;
+    return (announce.innerHTML = "You Win");
   } else if (computerChoice === "scissors" && playerChoice === "rock") {
-    return `player chose ${playerChoice}, which beats ${computerChoice}, player wins`;
+    playerScore++;
+    return (announce.innerHTML = "You Win");
   } else {
-    return `draw player chose ${playerChoice} and computer chose ${computerChoice}`;
+    return (announce.innerHTML = "DRAW");
   }
 };
-
-//play game 5 times
-
-// for(let i =0; i <5; i++){
-//     console.log(game(computerPlay(choices), playerChoice))
-// }
-
-//adding changes from wsl2
+//score tracking
+let playerScore = 0;
+let computerScore = 0;
+playRoundBtn.addEventListener("click", () => {
+  playGame(playerChoice, choices);
+  if (playerScore == 5) {
+    alert("GAME OVER YOU WIN");
+  }
+  if (computerScore == 5) {
+    alert("GAME OVER COMPUTER WINS");
+  }
+  computerScoreText.innerHTML = computerScore;
+  playerScoreText.innerHTML = playerScore;
+});
